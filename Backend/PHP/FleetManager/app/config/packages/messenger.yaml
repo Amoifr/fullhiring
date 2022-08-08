@@ -1,0 +1,18 @@
+framework:
+    messenger:
+        default_bus: app.messenger.command.bus
+
+        buses:
+            app.messenger.command.bus:
+                middleware:
+                    - messenger.middleware.validation
+
+        transports:
+            sync: 'sync://'
+            async: 'in-memory://'
+
+        routing:
+            'Fulll\App\Command\ParkVehicleCommand': sync
+            'Fulll\App\Command\RegisterVehicleIntoFleetCommand': sync
+            'Fulll\App\Query\GetFleetVehiclesQuery': sync
+            'Fulll\App\Query\GetVehicleLocationQuery': sync
