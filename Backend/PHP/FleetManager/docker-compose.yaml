@@ -1,0 +1,35 @@
+version: '3.8'
+
+networks:
+  php-mysql-node:
+
+services:
+  fulll-php-service:
+    build:
+      context: ./docker/php
+      dockerfile: ./Dockerfile
+    container_name: fulll-php-container
+    expose:
+      - '9000'
+    volumes:
+      - './app:/var/app'
+    networks:
+      - php-mysql-node
+
+  fulll-mysql-service:
+    image: mysql:8
+    container_name: fulll-mysql-container
+    ports:
+      - '8806:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: db
+    networks:
+      - php-mysql-node
+
+volumes:
+  html: null
+  vhostd: null
