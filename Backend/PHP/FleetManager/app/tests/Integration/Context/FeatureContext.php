@@ -13,9 +13,9 @@ use Fulll\App\Query\GetVehicleLocationQuery;
 use Fulll\Domain\Entity\Fleet;
 use Fulll\Domain\Entity\Location;
 use Fulll\Domain\Entity\Vehicle;
-use Fulll\Infra\ErrorDTO\AlreadyParkAtThisLocationErrorDTO;
-use Fulll\Infra\ErrorDTO\AlreadyPresentVehicleInFleetErrorDTO;
-use Fulll\Infra\ErrorStack;
+use Fulll\Infra\ErrorStack\ErrorDTO\AlreadyParkAtThisLocationErrorDTO;
+use Fulll\Infra\ErrorStack\ErrorDTO\AlreadyPresentVehicleInFleetErrorDTO;
+use Fulll\Infra\ErrorStack\ErrorStack;
 use Fulll\Kernel;
 use RuntimeException;
 use Symfony\Component\Messenger\MessageBus;
@@ -44,15 +44,14 @@ class FeatureContext implements Context
     /**
      * @BeforeSuite
      */
-    public static function prepare($scope)
+    public static function prepare(): void
     {
-        require_once __DIR__ . '/../../bootstrap.php';
+        require_once __DIR__.'/../../bootstrap.php';
         self::$kernel = new Kernel('test', true);
         self::$kernel->boot();
         global $kernel;
         $kernel = self::$kernel;
     }
-
 
     /**
      * @Given my fleet
@@ -129,7 +128,7 @@ class FeatureContext implements Context
      */
     public function registerVehicleIntoAnotherFleet(): void
     {
-        $this->registerVehicleIntoFleet($this->secondFleet);
+        $this->registerVehicleIntoFleet();
     }
 
     /**
@@ -137,7 +136,7 @@ class FeatureContext implements Context
      */
     public function registerVehicleIntoMyFleet(): void
     {
-        $this->registerVehicleIntoFleet($this->fleet);
+        $this->registerVehicleIntoFleet();
     }
 
     /**
@@ -149,7 +148,7 @@ class FeatureContext implements Context
             $envelope = $this->queryBus->dispatch(new GetFleetVehiclesQuery($this->fleet));
             $handledStamp = $envelope->last(HandledStamp::class);
             $vehicles = $handledStamp->getResult();
-            if (!in_array($this->vehicle, $vehicles)) {
+            if (!$vehicles->contains($this->vehicle)) {
                 throw new RuntimeException('Vehicle is not part of fleet');
             }
         } catch (Exception $e) {
@@ -162,7 +161,7 @@ class FeatureContext implements Context
      */
     public function registerVehicleIntoAFleet(): void
     {
-        $this->registerVehicleIntoFleet($this->fleet);
+        $this->registerVehicleIntoFleet();
     }
 
     /**

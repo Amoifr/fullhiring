@@ -6,7 +6,7 @@ namespace Fulll\App\CommandHandler;
 
 use Exception;
 use Fulll\App\Command\ParkVehicleCommand;
-use Fulll\Infra\CommandHandlerInterface;
+use Fulll\Infra\MessengerBus\CommandHandlerInterface;
 
 class ParkVehicleHandler implements CommandHandlerInterface
 {

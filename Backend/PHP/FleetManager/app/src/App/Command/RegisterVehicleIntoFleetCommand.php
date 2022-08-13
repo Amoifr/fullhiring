@@ -6,8 +6,7 @@ namespace Fulll\App\Command;
 
 use Fulll\Domain\Entity\Fleet;
 use Fulll\Domain\Entity\Vehicle;
-use Fulll\Infra\CommandInterface;
-
+use Fulll\Infra\MessengerBus\CommandInterface;
 
 class RegisterVehicleIntoFleetCommand implements CommandInterface
 {

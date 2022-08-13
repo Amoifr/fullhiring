@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Fulll\Infra;
+namespace Fulll\Infra\MessengerBus;
 
 interface CommandInterface
 {
-
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fulll\Infra;
+namespace Fulll\Infra\MessengerBus;
 
 use Symfony\Component\Messenger\MessageBusInterface;
 

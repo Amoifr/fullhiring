@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Fulll\App\Query;
 
 use Fulll\Domain\Entity\Fleet;
-use Fulll\Infra\QueryInterface;
+use Fulll\Infra\MessengerBus\QueryInterface;
 
 class GetFleetVehiclesQuery implements QueryInterface
 {

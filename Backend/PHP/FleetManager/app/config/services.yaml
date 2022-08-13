@@ -14,13 +14,28 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Domain/Entity/'
             - '../src/Kernel.php'
 
     _instanceof:
-        Fulll\Infra\CommandHandlerInterface:
+        Fulll\Infra\MessengerBus\CommandHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: app.messenger.command.bus }
-        Fulll\Infra\QueryHandlerInterface:
+        Fulll\Infra\MessengerBus\QueryHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: app.messenger.command.bus }
+
+
+    Fulll\DataFixtures\:
+        resource: '../src/DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
+    fulll.command.createFleet:
+        class: Fulll\Command\CreateFleetForUserCommand
+        tags:
+            - { name: console.command }
+
+    fulll.command.registerVehicleInFleet:
+        class: Fulll\Command\RegisterVehicleInFleetCommand
+        tags:
+            - { name: console.command }

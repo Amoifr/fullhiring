@@ -6,7 +6,7 @@ namespace Fulll\App\QueryHandler;
 
 use Fulll\App\Query\GetVehicleLocationQuery;
 use Fulll\Domain\Entity\Location;
-use Fulll\Infra\QueryHandlerInterface;
+use Fulll\Infra\MessengerBus\QueryHandlerInterface;
 
 class GetVehicleLocationHandler implements QueryHandlerInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Fulll\Infra\ErrorDTO;
+namespace Fulll\Infra\ErrorStack\ErrorDTO;
 
 use Fulll\Domain\Entity\Fleet;
 use Fulll\Domain\Entity\Vehicle;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Fulll\Infra;
+namespace Fulll\Infra\ErrorStack;
 
-use Fulll\Infra\ErrorDTO\ErrorDTOInterface;
+use Fulll\Infra\ErrorStack\ErrorDTO\ErrorDTOInterface;
 
 class ErrorStack
 {
@@ -38,20 +38,27 @@ class ErrorStack
         $errors = array_filter(
             $this->errors,
             function ($error) use ($errorDTO) {
-                return $this->errorsAreSimilar($error, $errorDTO);
+                return get_class($error) === get_class($errorDTO);
             }
         );
 
-        if (1 === count($errors)) {
-            unset($this->errors[array_search($errors[0], $this->errors)]);
+        // TODO: must to be replace by an efficient algorithm that can be able to compare ErrorDTOInterface objects
+        // may be a method in each implemented that compare only datas
+        /*$errors = array_filter(
+            $errors,
+            function ($error) use ($errorDTO) {
+                return $this->errorsAreSimilar($error, $errorDTO);
+            }
+        );*/
 
+        if (1 <= count($errors)) {
             return true;
         }
 
         return false;
     }
 
-    private function errorsAreSimilar(ErrorDTOInterface $expectedError, ErrorDTOInterface $actualError): bool
+    /*private function errorsAreSimilar(ErrorDTOInterface $expectedError, ErrorDTOInterface $actualError): bool
     {
         foreach (get_object_vars($expectedError) as $key => $value) {
             if (is_object($expectedError->$key)) {
@@ -66,5 +73,13 @@ class ErrorStack
         }
 
         return true;
+    }*/
+
+    /**
+     * @return ErrorDTOInterface[]
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }

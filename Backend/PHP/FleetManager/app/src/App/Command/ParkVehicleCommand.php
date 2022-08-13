@@ -6,7 +6,7 @@ namespace Fulll\App\Command;
 
 use Fulll\Domain\Entity\Location;
 use Fulll\Domain\Entity\Vehicle;
-use Fulll\Infra\CommandInterface;
+use Fulll\Infra\MessengerBus\CommandInterface;
 
 class ParkVehicleCommand implements CommandInterface
 {
